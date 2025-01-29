@@ -7,7 +7,10 @@ const data = await req.body // Works only if express.json() is not used
         const secret = "whsec_WPiGWQ1FYyDOxrg3rhqzvg9x7WNYNsq3"; // Store this in environment variables!
 
         const event = stripe.webhooks.constructEvent(data, sig, secret);
-        console.log(event);
+        const id = event.payload.id
+        const userData = event.payload.data
+        console.log("id",id)
+        console.log("userData",userData)
         //const newOrder=await Order(req.body);
         //const saveOrder= await newOrder.save();
         res.status(200).json({msg:"done"});
