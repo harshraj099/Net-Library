@@ -2,11 +2,12 @@ const Order = require("./order.model")
 
 const createAOrder=async(req,res)=>{
     try {
-const data = await req.text();
-        const sig  = req.header.get("stripe-signature")
-        const secret = "whsec_WPiGWQ1FYyDOxrg3rhqzvg9x7WNYNsq3"
-        const event = stripe.webhook.constructEvent(data,sig,secret)
-        console.log(event)
+const data = await req.body // Works only if express.json() is not used
+        const sig = req.headers["stripe-signature"];
+        const secret = "whsec_WPiGWQ1FYyDOxrg3rhqzvg9x7WNYNsq3"; // Store this in environment variables!
+
+        const event = stripe.webhooks.constructEvent(data, sig, secret);
+        console.log(event);
         //const newOrder=await Order(req.body);
         //const saveOrder= await newOrder.save();
         res.status(200).json({msg:"done"});
