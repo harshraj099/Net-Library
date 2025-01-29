@@ -1,5 +1,5 @@
 const Order = require("./order.model")
-
+const stripe = require("stripe")
 const createAOrder=async(req,res)=>{
     try {
 const data = await req.body // Works only if express.json() is not used
